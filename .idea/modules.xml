@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Fund.iml" filepath="$PROJECT_DIR$/Fund.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unifund.iml" filepath="$PROJECT_DIR$/unifund.iml" />
     </modules>
   </component>
 </project>
