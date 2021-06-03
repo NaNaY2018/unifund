@@ -1,0 +1,64 @@
+<!DOCTYPE html >
+<html >
+<head>
+    <meta charset="utf-8" />
+    <title>基金实盘</title>
+    <style>
+        .main {
+            text-align: center;
+        }
+
+        .top {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="title">
+        <h1>基金实盘日常操作（{{result.date}}）</h1>
+    </div>
+    <div class="top">
+        <span>净值估算：{{result.rate}}%</span><br>
+        <span>金额估算：{{result.amount}}￥</span><br>
+    </div>
+        <table id="oTable"  border="1" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>基金名称</th>
+                <th>基金代码</th>
+                <th>当前持仓</th>
+                <th>净值估算</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in result.list %}
+            <tr class="fund-row">
+                <td><div contenteditable="true">{{data.name}}</div></td>
+                <td><div contenteditable="true">{{data.code}}</div></td>
+                <td><div contenteditable="true">{{data.position}}</div></td>
+                <td><div contenteditable="true">{{data.net_value}}</div></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+</div>
+</body>
+<script>
+    function addRow(){
+        let oTable = document.getElementById("oTable");
+        let tBodies = oTable.tBodies;
+        let tbody = tBodies[0];
+        let tr = tbody.insertRow(tbody.rows.length);
+        let td_1 = tr.insertCell(0);
+        td_1.innerHTML = "<div contenteditable='true'></div>";
+        let td_2 = tr.insertCell(1);
+        td_2.innerHTML = "<div contenteditable='true'></div>";
+        let td_3 = tr.insertCell(2);
+        td_3.innerHTML = "<div contenteditable='true'></div>";
+        let td_4 = tr.insertCell(3);
+        td_4.innerHTML = "<div contenteditable='true'></div>";
+    }
+</script>
+</html>
