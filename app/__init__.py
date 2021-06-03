@@ -9,7 +9,7 @@ def create_app():
     app = Flask(__name__)
 
     # 设置连接数据库的URL
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Lenin1918@47.106.239.211:3306/fund'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Lenin1918@47.106.239.211:3306/fund'
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     # 查询时会显示原始SQL语句
