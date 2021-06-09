@@ -38,7 +38,12 @@ def importExcel():
     db.session.commit()
 
 
-def findFundNetValue(code):
+def findFundTodayValuation(code):
+    """
+    获取基金当日的净值估算信息
+    :param code:
+    :return:
+    """
     common_url = 'http://fundgz.1234567.com.cn/js/'
     D = Downloader(delay=0, user_agent='wswp3', proxies=None,
                    num_retries=1, cache=None)
@@ -47,11 +52,9 @@ def findFundNetValue(code):
     temp = html[8:-2]
     if temp != '':
         res = eval(temp)
-        # 涨跌幅
-        gszzl = Decimal(res['gszzl'])
     else:
         return None
-    return gszzl
+    return res
 
 
 @app.route("/index")
@@ -63,7 +66,7 @@ def index():
     for data in data_list:
         code = data.code
         # 涨跌幅
-        gszzl = findFundNetValue(code)
+        gszzl = Decimal(findFundTodayValuation(code)['gszzl'])
         data.position = data.position.quantize(Decimal("0.000"))
         if gszzl is not None:
             data.net_value = gszzl

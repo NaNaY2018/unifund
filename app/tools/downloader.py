@@ -14,13 +14,14 @@ DEFAULT_TIMEOUT = 60
 
 class Downloader:
     def __init__(self, delay=DEFAULT_DELAY, user_agent=DEFAULT_AGENT, proxies=None,
-                 num_retries=DEFAULT_RETRIES, timeout=DEFAULT_TIMEOUT, cache=None):
+                 num_retries=DEFAULT_RETRIES, timeout=DEFAULT_TIMEOUT, cache=None, headers=None):
         socket.setdefaulttimeout(timeout)
         self.throttle = Throttle(delay)
         self.user_agent = user_agent
         self.proxies = proxies
         self.num_retries = num_retries
         self.cache = cache
+        self.headers = headers
 
     def __call__(self, url):
         result = None
@@ -35,7 +36,7 @@ class Downloader:
         if result is None:
             self.throttle.wait(url)
             proxy = random.choice(self.proxies) if self.proxies else None
-            headers = {'User-agent': self.user_agent}
+            headers = self.headers if self.headers else {'User-agent': self.user_agent}
             result = self.download(url, headers, proxy, self.num_retries)
             if self.cache:
                 self.cache[url] = result
@@ -53,7 +54,7 @@ class Downloader:
             html = response.data
             if isinstance(html, bytes):
                 html = html.decode('utf-8')
-            #print(html)
+            # print(html)
             code = response.status if hasattr(response, 'status') else -1
             if num_retries > 0 and 500 <= code < 600:
                 return self.download(url, headers, proxy, num_retries - 1)

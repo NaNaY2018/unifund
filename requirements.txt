@@ -1,3 +1,4 @@
+demjson
 pymongo
 altgraph==0.17
 backcall==0.2.0
